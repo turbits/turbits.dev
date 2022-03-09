@@ -32,8 +32,8 @@ PostRouter.post("/", (req, res) => {
   const _req = {
     ...req,
     body: {
-      slug,
       ...req.body,
+      slug,
     },
   };
   PostController.create(_req, res);
@@ -41,13 +41,17 @@ PostRouter.post("/", (req, res) => {
 
 // ------------ PUT:UPDATE POST
 PostRouter.put("/:id", (req, res) => {
-  try {
-    // get post by id
-    // update post
-    // res with returned document
-  } catch (error) {
-    return res.status(500).send(error);
-  }
+  const updatedAt = Date.now();
+  const slug = slugify(req.body.title, slugopt);
+  const _req = {
+    ...req,
+    body: {
+      ...req.body,
+      slug,
+      updatedAt,
+    },
+  };
+  PostController.update(_req, res);
 });
 
 // ------------ DELETE:DELETE POST
