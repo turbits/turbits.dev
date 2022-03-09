@@ -31,8 +31,11 @@ class Controller {
     await ConnectToDatabase();
 
     try {
-      const data = this.model.findById(req.params.id);
-      return res.json(data);
+      const {
+        query: { id },
+      } = req;
+      const data = this.model.findById(id);
+      return res.status(200).json(data);
     } catch (error) {
       return this.r_fail(res, error);
     }

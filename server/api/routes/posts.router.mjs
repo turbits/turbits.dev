@@ -23,14 +23,7 @@ PostRouter.get("/", (req, res) => {
 
 // ------------ GET:POST BY ID
 PostRouter.get("/:id", (req, res) => {
-  // get singular post by id from mongo
-  const post = "";
-
-  if (!post) {
-    res.sendStatus(400);
-  }
-
-  res.send(post);
+  PostController.getById(req, res);
 });
 
 // ------------ POST:CREATE POST
