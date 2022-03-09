@@ -3,10 +3,10 @@ import express, { json } from "express";
 import { serve, setup } from "swagger-ui-express";
 
 import PostRouter from "./api/routes/posts.router.mjs";
+import UserRouter from "./api/routes/users.router.mjs";
 import cors from "cors";
 import swagdoc from "swagger-jsdoc";
 import titleAscii from "./titleAscii.mjs";
-import usersRouter from "./api/routes/users.router.mjs";
 
 // SETUP
 const app = express();
@@ -16,7 +16,7 @@ const spec = swagdoc({
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "kessel",
+      title: "KESSEL",
       version: "1.0.0",
       description: "A simple express API for turbits.dev",
     },
@@ -33,8 +33,8 @@ const spec = swagdoc({
 app.use("/api", serve, setup(spec));
 app.use(cors());
 app.use(json());
-app.use("/posts", PostRouter);
-app.use("/users", usersRouter);
+app.use("/v1/posts", PostRouter);
+app.use("/v1/users", UserRouter);
 
 // START SERVER
 app.listen(PORT, () => {
