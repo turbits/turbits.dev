@@ -16,7 +16,7 @@ const spec = swagdoc({
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "TDev API",
+      title: "kessel",
       version: "1.0.0",
       description: "A simple express API for turbits.dev",
     },
