@@ -28,18 +28,15 @@ PostRouter.get("/:id", (req, res) => {
 
 // ------------ POST:CREATE POST
 PostRouter.post("/", (req, res) => {
-  try {
-    const post = {
-      slug: slugify(req.body.title, slugopt),
+  const slug = slugify(req.body.title, slugopt);
+  const _req = {
+    ...req,
+    body: {
+      slug,
       ...req.body,
-    };
-
-    // insert post to mongo db
-
-    res.send(post);
-  } catch (error) {
-    return res.status(500).send(error);
-  }
+    },
+  };
+  PostController.create(_req, res);
 });
 
 // ------------ PUT:UPDATE POST

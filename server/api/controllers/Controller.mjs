@@ -41,7 +41,19 @@ class Controller {
     }
   };
 
-  create(req, res) {}
+  create = async (req, res) => {
+    if (!req.method === "POST") this.r_methodNotAllowed();
+
+    await ConnectToDatabase();
+
+    try {
+      const post = new this.model(req.body);
+      await post.save();
+      return res.status(200).json(post);
+    } catch (error) {
+      return this.r_fail(res, error);
+    }
+  };
 
   update(req, res) {}
 
