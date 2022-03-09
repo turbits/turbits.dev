@@ -2,8 +2,8 @@
 import express, { json } from "express";
 import { serve, setup } from "swagger-ui-express";
 
+import PostRouter from "./api/routes/posts.router.mjs";
 import cors from "cors";
-import postsRouter from "./api/routes/posts.router.mjs";
 import swagdoc from "swagger-jsdoc";
 import titleAscii from "./titleAscii.mjs";
 import usersRouter from "./api/routes/users.router.mjs";
@@ -33,7 +33,7 @@ const spec = swagdoc({
 app.use("/api", serve, setup(spec));
 app.use(cors());
 app.use(json());
-app.use("/posts", postsRouter);
+app.use("/posts", PostRouter);
 app.use("/users", usersRouter);
 
 // START SERVER

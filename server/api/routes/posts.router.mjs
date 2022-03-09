@@ -1,9 +1,9 @@
+import PostController from "../controllers/PostController.mjs";
 import { Router } from "express";
-import getAll from "../controllers/PostController.mjs";
 import mg from "mongoose";
 import slugify from "slugify";
 
-const postsRouter = Router();
+const PostRouter = Router();
 
 // OPTIONS
 const slugopt = {
@@ -17,14 +17,12 @@ const slugopt = {
 
 // ROUTES
 // ------------ GET:ALL POSTS
-postsRouter.get("/", (req, res) => {
-  // get all posts from mongo
-  // res.send(posts);
-  getAll(req, res);
+PostRouter.get("/", (req, res) => {
+  PostController.getAll(req, res);
 });
 
 // ------------ GET:POST BY ID
-postsRouter.get("/:id", (req, res) => {
+PostRouter.get("/:id", (req, res) => {
   // get singular post by id from mongo
   const post = "";
 
@@ -36,7 +34,7 @@ postsRouter.get("/:id", (req, res) => {
 });
 
 // ------------ POST:CREATE POST
-postsRouter.post("/", (req, res) => {
+PostRouter.post("/", (req, res) => {
   try {
     const post = {
       slug: slugify(req.body.title, slugopt),
@@ -52,7 +50,7 @@ postsRouter.post("/", (req, res) => {
 });
 
 // ------------ PUT:UPDATE POST
-postsRouter.put("/:id", (req, res) => {
+PostRouter.put("/:id", (req, res) => {
   try {
     // get post by id
     // update post
@@ -63,10 +61,11 @@ postsRouter.put("/:id", (req, res) => {
 });
 
 // ------------ DELETE:DELETE POST
-postsRouter.delete("/:id", (req, res) => {
+PostRouter.delete("/:id", (req, res) => {
   // delete post by id
+  console.log("delete");
 
   res.sendStatus(200);
 });
 
-export default postsRouter;
+export default PostRouter;
