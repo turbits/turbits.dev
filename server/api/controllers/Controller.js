@@ -1,4 +1,6 @@
 const express = require("express");
+const mongoose = require("mongoose");
+const connectToDatabase = require("../lib/connectToDatabase");
 
 class Controller {
   constructor(schema) {
@@ -10,7 +12,18 @@ class Controller {
     return res.status(code).json({ message });
   };
 
-  getAll(req, res) {}
+  getAll(req, res) {
+    if (!req.method === "GET") this.r_methodNotAllowed();
+
+    await connectToDatabase();
+
+    try {
+      const data = await this.schema.find();
+      return res.json(data);
+    } catch (error) {
+      return r_fail(res, error);
+    }
+  }
 
   getById(req, res) {}
 
@@ -49,8 +62,16 @@ class Controller {
     return this.jsonResponse(res, 403, message ? message : "🟥 API: Forbidden");
   };
 
-  r_notfound = (res, message) => {
+  r_notFound = (res, message) => {
     return this.jsonResponse(res, 404, message ? message : "🟥 API: Not found");
+  };
+
+  r_methodNotAllowed = (res, message) => {
+    return this.jsonResponse(
+      res,
+      405,
+      message ? message : "🟥 API: Method not allowed"
+    );
   };
 
   r_conflict = (res, message) => {
