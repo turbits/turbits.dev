@@ -56,10 +56,7 @@ PostRouter.put("/:id", (req, res) => {
 
 // ------------ DELETE:DELETE POST
 PostRouter.delete("/:id", (req, res) => {
-  // delete post by id
-  console.log("delete");
-
-  res.sendStatus(200);
+  PostController.delete(req, res);
 });
 
 export default PostRouter;
