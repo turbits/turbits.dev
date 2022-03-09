@@ -2,17 +2,17 @@ import { Router } from "express";
 import mongodb from "mongodb";
 import slugify from "slugify";
 
-const usersRouter = Router();
+const UserRouter = Router();
 
 // Routes
 // ------------ Get All Users
-usersRouter.get("/", (req, res) => {
+UserRouter.get("/", (req, res) => {
   // get all users from mongo
   // res.send(users);
 });
 
 // ------------ Get User By ID
-usersRouter.get("/:id", (req, res) => {
+UserRouter.get("/:id", (req, res) => {
   // get singular user by id from mongo
   const user = "";
 
@@ -24,7 +24,7 @@ usersRouter.get("/:id", (req, res) => {
 });
 
 // ------------ Create User
-usersRouter.post("/", (req, res) => {
+UserRouter.post("/", (req, res) => {
   try {
     const user = {
       ...req.body,
@@ -39,7 +39,7 @@ usersRouter.post("/", (req, res) => {
 });
 
 // ------------ Update User
-usersRouter.put("/:id", (req, res) => {
+UserRouter.put("/:id", (req, res) => {
   try {
     // get user by id
     // update user
@@ -50,10 +50,10 @@ usersRouter.put("/:id", (req, res) => {
 });
 
 // ------------ Delete User
-usersRouter.delete("/:id", (req, res) => {
+UserRouter.delete("/:id", (req, res) => {
   // delete user by id
 
   res.sendStatus(200);
 });
 
-export default usersRouter;
+export default UserRouter;

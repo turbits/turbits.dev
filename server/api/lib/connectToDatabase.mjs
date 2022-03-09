@@ -5,13 +5,13 @@ import mongoose from "mongoose";
 // SETUP
 const { NODE_ENV, DB_LOCAL_URI, DB_PROD_URI } = process.env;
 const PORT = process.env.PORT || 27017;
-let databaseUrl = "";
+let dbUri = "";
 let cached = global.mongoose;
 
 if (NODE_ENV === "production") {
-  databaseUrl = `${DB_PROD_URI}?retryWrites=true&w=majority`;
+  dbUri = DB_PROD_URI;
 } else if (NODE_ENV === "development") {
-  databaseUrl = DB_LOCAL_URI;
+  dbUri = DB_LOCAL_URI;
 } else {
   throw new Error("NODE_ENV not set");
 }
@@ -30,9 +30,11 @@ export const ConnectToDatabase = async () => {
     console.log(`🟦 no cached connection found, creating new connection`);
     const opts = {
       bufferCommands: false,
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
     };
 
-    cached.promise = mongoose.connect(databaseUrl, opts).then((mongoose) => {
+    cached.promise = mongoose.connect(dbUri, opts).then((mongoose) => {
       return mongoose;
     });
   }
