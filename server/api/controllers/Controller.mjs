@@ -1,5 +1,5 @@
+import { ConnectToDatabase } from "../lib/ConnectToDatabase.mjs";
 import { Router } from "express";
-import { connectToDatabase } from "../lib/connectToDatabase.mjs";
 import mongoose from "mongoose";
 
 class Controller {
@@ -15,17 +15,28 @@ class Controller {
   getAll = async (req, res) => {
     if (!req.method === "GET") this.r_methodNotAllowed();
 
-    const db = await connectToDatabase();
+    await ConnectToDatabase();
 
     try {
-      const data = await db.collection.find();
-      return res.json(data);
+      const data = await this.model.find({});
+      return res.status(200).json(data);
     } catch (error) {
-      return r_fail(res, error);
+      return this.r_fail(res, error);
     }
   };
 
-  getById(req, res) {}
+  getById = async (req, res) => {
+    if (!req.method === "GET") this.r_methodNotAllowed();
+
+    await ConnectToDatabase();
+
+    try {
+      const data = this.model.findById(req.params.id);
+      return res.json(data);
+    } catch (error) {
+      return this.r_fail(res, error);
+    }
+  };
 
   create(req, res) {}
 
@@ -43,39 +54,31 @@ class Controller {
   };
 
   r_unspecified = (res, message) => {
-    return this.jsonResponse(
-      res,
-      400,
-      message ? message : "🟥 API: Unspecified error"
-    );
+    return this.jsonResponse(res, 400, (message = "🟥 API: Unspecified error"));
   };
 
   r_unauthorized = (res, message) => {
-    return this.jsonResponse(
-      res,
-      401,
-      message ? message : "🟥 API: Unauthorized"
-    );
+    return this.jsonResponse(res, 401, (message = "🟥 API: Unauthorized"));
   };
 
   r_forbidden = (res, message) => {
-    return this.jsonResponse(res, 403, message ? message : "🟥 API: Forbidden");
+    return this.jsonResponse(res, 403, (message = "🟥 API: Forbidden"));
   };
 
   r_notFound = (res, message) => {
-    return this.jsonResponse(res, 404, message ? message : "🟥 API: Not found");
+    return this.jsonResponse(res, 404, (message = "🟥 API: Not found"));
   };
 
   r_methodNotAllowed = (res, message) => {
     return this.jsonResponse(
       res,
       405,
-      message ? message : "🟥 API: Method not allowed"
+      (message = "🟥 API: Method not allowed")
     );
   };
 
   r_conflict = (res, message) => {
-    return this.jsonResponse(res, 409, message ? message : "🟥 API: Conflict");
+    return this.jsonResponse(res, 409, (message = "🟥 API: Conflict"));
   };
 
   r_fail = (res, message) => {
@@ -83,16 +86,12 @@ class Controller {
     return this.jsonResponse(
       res,
       500,
-      message ? message : "🟥 API: Internal server error"
+      (message = "🟥 API: Internal server error")
     );
   };
 
   r_reqlimit = (res, message) => {
-    return this.jsonResponse(
-      res,
-      429,
-      message ? message : "🟥 API: Too many requests"
-    );
+    return this.jsonResponse(res, 429, (message = "🟥 API: Too many requests"));
   };
 }
 
