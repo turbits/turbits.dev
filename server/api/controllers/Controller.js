@@ -20,7 +20,7 @@ class Controller {
 
   delete(req, res) {}
 
-  ok = (res, dto) => {
+  r_ok = (res, dto) => {
     if (!!dto) {
       res.type("application/json");
       return res.status(200).json(dto);
@@ -74,3 +74,5 @@ class Controller {
     );
   };
 }
+
+module.exports = Controller;

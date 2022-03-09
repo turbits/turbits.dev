@@ -32,10 +32,12 @@ const Post = new Schema({
   },
   createdAt: {
     type: Date,
+    require: true,
     default: Date.now,
   },
   updatedAt: {
     type: Date,
+    require: false,
     default: null,
   },
   tags: [

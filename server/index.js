@@ -2,8 +2,8 @@
 const express = require("express");
 const swagui = require("swagger-ui-express");
 const swagdoc = require("swagger-jsdoc");
-const postsRouter = require("./routes/posts");
-const usersRouter = require("./routes/users");
+const postsRouter = require("./api/routes/posts");
+const usersRouter = require("./api/routes/users");
 const cors = require("cors");
 
 // SETUP
