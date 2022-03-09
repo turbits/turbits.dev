@@ -1,26 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const slugify = require("slugify");
-const mongodb = require("mongodb");
+import { Router } from "express";
+import mongodb from "mongodb";
+import slugify from "slugify";
 
-const slugopt = {
-  replacement: "-",
-  remove: /[$*_+~.()'"!\-:@]/g,
-  lower: true,
-  strict: true,
-  locale: "en",
-  trim: true,
-};
+const usersRouter = Router();
 
 // Routes
 // ------------ Get All Users
-router.get("/", (req, res) => {
+usersRouter.get("/", (req, res) => {
   // get all users from mongo
   // res.send(users);
 });
 
 // ------------ Get User By ID
-router.get("/:id", (req, res) => {
+usersRouter.get("/:id", (req, res) => {
   // get singular user by id from mongo
   const user = "";
 
@@ -32,7 +24,7 @@ router.get("/:id", (req, res) => {
 });
 
 // ------------ Create User
-router.post("/", (req, res) => {
+usersRouter.post("/", (req, res) => {
   try {
     const user = {
       ...req.body,
@@ -47,7 +39,7 @@ router.post("/", (req, res) => {
 });
 
 // ------------ Update User
-router.put("/:id", (req, res) => {
+usersRouter.put("/:id", (req, res) => {
   try {
     // get user by id
     // update user
@@ -58,10 +50,10 @@ router.put("/:id", (req, res) => {
 });
 
 // ------------ Delete User
-router.delete("/:id", (req, res) => {
+usersRouter.delete("/:id", (req, res) => {
   // delete user by id
 
   res.sendStatus(200);
 });
 
-module.exports = router;
+export default usersRouter;

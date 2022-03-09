@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+
+// SETUP
 const { NODE_ENV, DB_LOCAL_URI, DB_PROD_URI, DB_NAME } = process.env;
 const PORT = process.env.PORT || 4000;
-
 let databaseUrl = "";
 let cached = global.mongoose;
 
@@ -17,7 +18,7 @@ if (!cached) {
   cached = global.mongoose = { conn: null, promise: null };
 }
 
-const connectToDatabase = async () => {
+export const connectToDatabase = async () => {
   if (cached.conn) {
     console.log(`🟦 cached connection found: ${cached.conn}`);
     return cached.conn;
@@ -37,5 +38,3 @@ const connectToDatabase = async () => {
   cached.conn = await cached.promise;
   return cached.conn;
 };
-
-export default connectToDatabase;

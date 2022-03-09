@@ -1,29 +1,29 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const connectToDatabase = require("../lib/connectToDatabase");
+import { Router } from "express";
+import { connectToDatabase } from "../lib/connectToDatabase.mjs";
+import mongoose from "mongoose";
 
 class Controller {
-  constructor(schema) {
-    this.schema = schema;
-    this.router = express.Router();
+  constructor(model) {
+    this.model = model;
+    this.router = Router();
   }
 
   jsonResponse = (res, code, message) => {
     return res.status(code).json({ message });
   };
 
-  getAll(req, res) {
+  getAll = async (req, res) => {
     if (!req.method === "GET") this.r_methodNotAllowed();
 
-    await connectToDatabase();
+    const db = await connectToDatabase();
 
     try {
-      const data = await this.schema.find();
+      const data = await db.collection.find();
       return res.json(data);
     } catch (error) {
       return r_fail(res, error);
     }
-  }
+  };
 
   getById(req, res) {}
 
@@ -96,4 +96,4 @@ class Controller {
   };
 }
 
-module.exports = Controller;
+export default Controller;

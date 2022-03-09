@@ -1,9 +1,12 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+import Image from "./image.model.mjs";
+import mongoose from "mongoose";
 
-import Image from "./image.model";
-
-const Post = new Schema({
+const Post = new mongoose.Schema({
+  _id: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    unique: true,
+  },
   slug: {
     type: String,
     require: true,
@@ -49,4 +52,4 @@ const Post = new Schema({
   ],
 });
 
-module.exports = new mongoose.model("Post", Post);
+export default new mongoose.model("Post", Post);

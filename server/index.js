@@ -1,10 +1,12 @@
 // IMPORTS
-const express = require("express");
-const swagui = require("swagger-ui-express");
-const swagdoc = require("swagger-jsdoc");
-const postsRouter = require("./api/routes/posts");
-const usersRouter = require("./api/routes/users");
-const cors = require("cors");
+import express, { json } from "express";
+import { serve, setup } from "swagger-ui-express";
+
+import cors from "cors";
+import postsRouter from "./api/routes/posts.router.mjs";
+import swagdoc from "swagger-jsdoc";
+import titleAscii from "./titleAscii.mjs";
+import usersRouter from "./api/routes/users.router.mjs";
 
 // SETUP
 const app = express();
@@ -28,14 +30,15 @@ const spec = swagdoc({
 });
 
 // MIDDLEWARE
-app.use("/api", swagui.serve, swagui.setup(spec));
+app.use("/api", serve, setup(spec));
 app.use(cors());
-app.use(express.json());
+app.use(json());
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
 
 // START SERVER
 app.listen(PORT, () => {
+  console.log(titleAscii);
   console.log(
     `🟦 environment: ${
       _environment === "production" ? "🚀 production" : "🔧 development"
