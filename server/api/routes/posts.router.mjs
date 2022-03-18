@@ -1,6 +1,5 @@
 import PostController from "../controllers/PostController.mjs";
 import { Router } from "express";
-import mg from "mongoose";
 import slugify from "slugify";
 
 const PostRouter = Router();
