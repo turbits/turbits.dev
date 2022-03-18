@@ -2,7 +2,7 @@
 
 ### What it do
 
-turbits.dev is my blog/site
+turbits.dev is my site/cms project
 
 ### What it made with
 
