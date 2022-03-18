@@ -1,59 +1,40 @@
 import { Router } from "express";
-import mongodb from "mongodb";
-import slugify from "slugify";
+import UserController from "../controllers/UserController.mjs";
 
 const UserRouter = Router();
 
 // Routes
-// ------------ Get All Users
+// ------------ GET:ALL USERS
 UserRouter.get("/", (req, res) => {
-  // get all users from mongo
-  // res.send(users);
+  UserController.getAll(req, res);
 });
 
-// ------------ Get User By ID
+// ------------ GET:USER BY ID
 UserRouter.get("/:id", (req, res) => {
-  // get singular user by id from mongo
-  const user = "";
-
-  if (!user) {
-    res.sendStatus(400);
-  }
-
-  res.send(user);
+  UserController.getById(req, res);
 });
 
-// ------------ Create User
+// ------------ POST:CREATE USER
 UserRouter.post("/", (req, res) => {
-  try {
-    const user = {
-      ...req.body,
-    };
-
-    // insert user to mongo db
-
-    res.send(user);
-  } catch (error) {
-    return res.status(500).send(error);
-  }
+  UserController.create(req, res);
 });
 
-// ------------ Update User
+// ------------ PUT:UPDATE USER BY ID
 UserRouter.put("/:id", (req, res) => {
-  try {
-    // get user by id
-    // update user
-    // res with returned document
-  } catch (error) {
-    return res.status(500).send(error);
-  }
+  const updatedAt = Date.now();
+  const _req = {
+    ...req,
+    body: {
+      ...req.body,
+      updatedAt,
+    },
+  };
+  UserController.update(_req, res);
 });
 
-// ------------ Delete User
+// ------------ DELETE:DELETE USER BY ID
 UserRouter.delete("/:id", (req, res) => {
-  // delete user by id
-
-  res.sendStatus(200);
+  UserController.delete(req, res);
 });
 
 export default UserRouter;
